@@ -17,6 +17,14 @@ It runs under your control (local runtime + local UI) and is **not a hosted mult
 The platform combines realtime gas telemetry, historical analysis, practical fee calculators, and operator alerts in one interface.
 It is designed for speed-sensitive operators who need to decide **when** to submit a transaction and **which fee profile** to use.
 
+## Tech Stack Used
+
+- **Backend**: Python + FastAPI, async services, Web3 node integration
+- **Frontend**: HTML/CSS/JavaScript dashboard runtime
+- **Realtime transport**: WebSocket stream (`/ws/gas`) + REST analytics endpoints
+- **Data layer**: SQLite history store with caching and rollup logic
+- **Deployment style**: standalone local-first runtime under operator control
+
 ## High-Level Architecture
 
 - **Frontend Runtime (`gas_tracker.html` + `gas_tracker.js`)**
