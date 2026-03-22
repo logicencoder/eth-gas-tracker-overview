@@ -8,6 +8,9 @@
 ETH Gas Tracker is a **standalone, local-first realtime application** for Ethereum fee intelligence.
 It runs under your control (local runtime + local UI) and is **not a hosted multi-tenant SaaS web app**.
 
+- Current delivery mode: **standalone local-first runtime**
+- Live website mode: **planned (public link will be added when release is ready)**
+
 ## UI Snapshot
 
 ![ETH Gas Tracker UI](assets/eth-gas-tracker-overview.png)
