@@ -9,8 +9,11 @@ ETH Gas Tracker is a **standalone, local-first realtime application** for Ethere
 It runs under your control (local runtime + local UI) and is **not a hosted multi-tenant SaaS web app**.
 
 - Current delivery mode: **standalone local-first runtime**
-- Live website mode: **planned (public link will be added when release is ready)**
-- Live URL: `Coming soon`
+- Live website mode: **active (WordPress frontend + private FastAPI backend)**
+- Live URL: `https://logicencoder.com/ethereum-gas-tracker/`
+- Companion live overview repos:
+  - `https://github.com/logicencoder/eth-gas-live-backend-overview-public`
+  - `https://github.com/logicencoder/eth-gas-live-plugin-overview-public`
 
 ## UI Snapshot
 
@@ -20,6 +23,8 @@ It runs under your control (local runtime + local UI) and is **not a hosted mult
 
 The platform combines realtime gas telemetry, historical analysis, practical fee calculators, and operator alerts in one interface.
 It is designed for speed-sensitive operators who need to decide **when** to submit a transaction and **which fee profile** to use.
+
+The same engine now powers a live WordPress delivery while preserving native dashboard behavior and websocket-first updates.
 
 ## Tech Stack Used
 
@@ -33,12 +38,24 @@ It is designed for speed-sensitive operators who need to decide **when** to subm
 
 - **Frontend Runtime (`gas_tracker.html` + `gas_tracker.js`)**
   - live cards, charts, heatmap, featured actions, alerts, and fee calculator
+- **WordPress Native Plugin Bridge (`eth-gas-live-plugin`)**
+  - renders local-parity native UI in WordPress (no iframe)
+  - injects backend URLs + websocket-only runtime flags
+  - includes Mission Control admin observability panel
 - **Backend API + Stream (`gas_tracker.py`)**
   - FastAPI endpoints + WebSocket broadcast for low-latency updates
 - **Data Layer (SQLite)**
   - historical sample persistence, cached query responses, statistical rollups
 - **Node Integration Layer**
   - Ethereum RPC/WS ingestion, block/mempool-derived metrics, fee signal normalization
+
+## Live Payload Workflow
+
+1. Backend computes per-block gas snapshot.
+2. Snapshot is sent via websocket (`/ws/gas`) to active UI clients.
+3. Snapshot is persisted to SQLite for history/stat endpoints.
+4. Optional signed mirror payload is pushed to WordPress cache bridge route.
+5. WordPress Mission Control polls `/api/monitoring/overview` for runtime/websocket/db/cache telemetry.
 
 ## Comprehensive Feature Inventory
 
