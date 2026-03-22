@@ -10,6 +10,7 @@ It runs under your control (local runtime + local UI) and is **not a hosted mult
 
 - Current delivery mode: **standalone local-first runtime**
 - Live website mode: **planned (public link will be added when release is ready)**
+- Live URL: `Coming soon`
 
 ## UI Snapshot
 
