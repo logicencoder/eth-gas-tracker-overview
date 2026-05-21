@@ -38,9 +38,7 @@ Private implementation: `eth-gas-live-backend-private`, `eth-gas-live-plugin-pri
 
 **Base Route**, **Standard Way**, **Faster Inclusion** — each with GWEI, ETH, USD, priority breakdown, and confirmation estimate. Updates on new blocks via WebSocket (REST fallback).
 
-### 2. Network stress (not mempool size)
-
-Live UI emphasizes metrics that are **measurable from blocks**:
+### 2. Network stress
 
 - Tx/min estimate  
 - IPI (Inclusion Pressure Index) 0–100  
@@ -48,8 +46,6 @@ Live UI emphasizes metrics that are **measurable from blocks**:
 - Fee competition (tip spread)  
 - Block utilization and block speed pressure  
 - Status labels (e.g. normal / high / spike)  
-
-A dedicated SEO page `/ethereum-mempool-tracker/` discusses **network load and throughput** with live IPI and tx/min—it does **not** promise a global pending-transaction count.
 
 ### 3. History and analytics
 
@@ -68,7 +64,7 @@ A dedicated SEO page `/ethereum-mempool-tracker/` discusses **network load and t
 
 ### 5. Indexable content cluster
 
-Eleven topic paths plus the live tracker hub; content filled with live placeholders so Google and users see **current** fees and stress scores. Hub navigation in the SPA lists nine quick links (calculator, best time, history, …) without a separate “mempool size” tab.
+Eleven topic paths plus the live tracker hub; content filled with live placeholders so pages show **current** fees and stress scores. In-app hub: nine quick links (calculator, best time, history, fees today, …).
 
 ### 6. Operations
 
@@ -95,8 +91,3 @@ Backend exposes health/monitoring JSON; WordPress admin **Mission Control** char
 - **Partners** — understand surfaces before API or branding discussions  
 - **Users** — what the live site does without reading code  
 
----
-
-## Disclosure
-
-Intentionally excludes implementation secrets (RPC wiring, deploy hosts, keys). For technical depth, see private repositories after access is granted.
