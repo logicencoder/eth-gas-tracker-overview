@@ -1,215 +1,100 @@
-# ETH Gas Tracker (Standalone) — Overview
+# Ethereum Gas Tracker — Product Overview (Public)
 
-> This is an **overview repository** for presentation and evaluation.
-> It intentionally excludes private implementation code and operational secrets.
+> Documentation-only repository for evaluation and portfolios.  
+> No private implementation or secrets.
 
-## Positioning
+![Ethereum Gas Tracker](assets/eth-gas-tracker-overview.png)
 
-ETH Gas Tracker is a **standalone, local-first realtime application** for Ethereum fee intelligence.
-It runs under your control (local runtime + local UI) and is **not a hosted multi-tenant SaaS web app**.
+**Live site:** https://logicencoder.com/ethereum-gas-tracker/
 
-- Current delivery mode: **standalone local-first runtime**
-- Live website mode: **active (WordPress frontend + private FastAPI backend)**
-- Live URL: `https://logicencoder.com/ethereum-gas-tracker/`
-- Companion live overview repos:
-  - `https://github.com/logicencoder/eth-gas-live-backend-overview-public`
-  - `https://github.com/logicencoder/eth-gas-live-plugin-overview-public`
+---
 
-## UI Snapshot
+## What is this?
 
-![ETH Gas Tracker UI](assets/eth-gas-tracker-overview.png)
+**Ethereum Gas Tracker** is a realtime product for understanding **when** and **how expensively** to send Ethereum transactions. It combines live network data, historical context, and practical cost tools in one dashboard.
 
-## Product Summary
+It exists in two delivery forms:
 
-The platform combines realtime gas telemetry, historical analysis, practical fee calculators, and operator alerts in one interface.
-It is designed for speed-sensitive operators who need to decide **when** to submit a transaction and **which fee profile** to use.
+| Mode | Description |
+|------|-------------|
+| **Live website** | WordPress page + shared backend (primary public experience today) |
+| **Standalone / operator** | Local-first runtime under your own machine (same UX philosophy) |
 
-The same engine now powers a live WordPress delivery while preserving native dashboard behavior and websocket-first updates.
+---
 
-## Tech Stack Used
+## What problems does it solve?
 
-- **Backend**: Python + FastAPI, async services, Web3 node integration
-- **Frontend**: HTML/CSS/JavaScript dashboard runtime
-- **Realtime transport**: WebSocket stream (`/ws/gas`) + REST analytics endpoints
-- **Data layer**: SQLite history store with caching and rollup logic
-- **Deployment style**: standalone local-first runtime under operator control
+- **Fee surprise** — see tiered costs before you sign a transaction  
+- **Bad timing** — heatmaps and rolling stats highlight quieter windows  
+- **Guesswork** — calculator and preset actions replace vague “set gas to X”  
+- **Blind spots** — mempool size, utilization, and stress indicators add context  
+- **Alert fatigue vs silence** — optional thresholds when fees cross your line  
 
-## High-Level Architecture
+You do not need to read blocks on Etherscan manually to get a usable signal.
 
-- **Frontend Runtime (`gas_tracker.html` + `gas_tracker.js`)**
-  - live cards, charts, heatmap, featured actions, alerts, and fee calculator
-- **WordPress Native Plugin Bridge (`eth-gas-live-plugin`)**
-  - renders local-parity native UI in WordPress (no iframe)
-  - injects backend URLs + websocket-only runtime flags
-  - includes Mission Control admin observability panel
-- **Backend API + Stream (`gas_tracker.py`)**
-  - FastAPI endpoints + WebSocket broadcast for low-latency updates
-- **Data Layer (SQLite)**
-  - historical sample persistence, cached query responses, statistical rollups
-- **Node Integration Layer**
-  - Ethereum RPC/WS ingestion, block/mempool-derived metrics, fee signal normalization
+---
 
-## Live Payload Workflow
+## What you can do (product features)
 
-1. Backend computes per-block gas snapshot.
-2. Snapshot is sent via websocket (`/ws/gas`) to active UI clients.
-3. Snapshot is persisted to SQLite for history/stat endpoints.
-4. Optional signed mirror payload is pushed to WordPress cache bridge route.
-5. WordPress Mission Control polls `/api/monitoring/overview` for runtime/websocket/db/cache telemetry.
+### Monitor
 
-## Comprehensive Feature Inventory
+- Live network and connection status  
+- Current fees for economical, standard, and faster paths  
+- ETH and USD estimates per tier  
+- Short **pressure / spike aware** guidance (wait vs send now)  
 
-### A) Realtime Monitoring
+### Analyze
 
-1. Live connection indicator
-2. Live network status visibility
-3. Last update timestamp
-4. Current block number display
-5. Mempool size monitoring
-6. Network stress card
-7. Trend direction signal
-8. Safe route gas tier
-9. Standard route gas tier
-10. Fast inclusion gas tier
-11. Per-tier GWEI values
-12. Per-tier ETH cost estimation
-13. Per-tier USD cost estimation
-14. Tier-specific priority fee display
-15. Tier-specific expected confirmation window
+- Historical price charts  
+- Hour/day **heatmap** (live site uses your local timezone)  
+- Rolling ~25-hour statistics  
+- Best / worst time hints  
 
-### B) Core Analytics Panels
+### Plan
 
-16. Network statistics overview panel
-17. Rolling average gas metrics
-18. Current vs average deltas
-19. Block utilization tracking
-20. Average utilization tracking
-21. Block size tracking
-22. Average block size tracking
-23. Data range selector
-24. Time-range aware charting
-25. Historical gas price chart
-26. Multi-series chart (safe/standard/fast)
-27. Realtime chart mode for short windows
-28. Historical downsample strategy for large windows
-29. Historical data cache for faster redraw
-30. Heatmap visualization by hour/day
+- Gas limit calculator with common presets  
+- Featured costs for transfers, swaps, approvals, bridges, NFT actions, and more  
+- Custom alerts (above/below thresholds)  
 
-### C) Action-Oriented Decision Tools
+### Discover (live)
 
-31. Fee calculator with editable gas limit
-32. Preset gas-limit shortcuts by action type
-33. Calculator mode switch (safe/standard/fast)
-34. Manual custom gas price entry support
-35. Dynamic estimated ETH output
-36. Dynamic estimated USD output
-37. Featured transaction costs module
-38. ETH transfer cost profile
-39. Token transfer cost profile
-40. Token approve cost profile
-41. DEX swap cost profile
-42. NFT mint/sale cost profile
-43. Bridge transaction cost profile
-44. Lending/borrowing cost profile
-45. Compound/claim-rewards cost profile
+- SEO-oriented pages (fees today, calculator, network status, etc.) fed by the same live engine  
 
-### D) Intelligence & Guidance
+---
 
-46. Best-time insight card
-47. Worst-time insight card
-48. Average cost-at-best-time metric
-49. Average cost-at-worst-time metric
-50. Send recommendation engine
-51. Cost-optimized send recommendation
-52. Speed-optimized send recommendation
-53. Network stress score with advisory text
-54. Hourly average trend summaries
-55. Distribution metrics (median, min, max)
-56. Percentile metrics (p10 / p90)
-57. Route-specific historical comparisons
+## Live stack (high level — no internals)
 
-### E) Alerts & Operator Workflow
+- FastAPI backend with WebSocket realtime stream  
+- WordPress plugin for the public website UI  
+- SQLite-backed history for charts  
+- SEO rendering layer for indexable pages  
+- Cloudflare Tunnel style public routing in production  
 
-58. Custom gas alert creation
-59. Threshold type selector (above/below)
-60. Threshold value input
-61. Active alerts list
-62. Alert deletion control
-63. Visual alert notifications
-64. Session-safe UI behavior for missing widgets
-65. Noise-reduced update scheduling by block changes
+---
 
-### F) Reliability & Systems Engineering
+## Related overview repos
 
-66. WebSocket realtime stream for low-latency updates
-67. REST fallback endpoints for deterministic queries
-68. Backend health endpoint
-69. Database persistence for historical analytics
-70. Purge endpoints for retention control (admin usage)
-71. DB pragmas and indexing for performance
-72. Host autodetection for local node preference
-73. Feature data caching for heavy analytic views
-74. Structured service logging paths for diagnostics
-75. Resilient fetch/retry patterns in frontend runtime
+| Repository | Focus |
+|------------|--------|
+| [eth-gas-live-backend-overview-public](https://github.com/logicencoder/eth-gas-live-backend-overview-public) | Backend capabilities |
+| [eth-gas-live-plugin-overview-public](https://github.com/logicencoder/eth-gas-live-plugin-overview-public) | WordPress integration |
 
-## API Surface (High-Level)
+Private implementation:
 
-Observed functional domains:
+- `logicencoder/eth-gas-live-backend-private` — backend + SSR (current live code)  
+- `logicencoder/eth-gas-live-plugin-private` — WordPress plugin  
+- `logicencoder/eth_gas_tracker` — older standalone tree; live SSR stack is in **eth-gas-live-backend-private**
 
-- Gas current snapshot
-- Gas history/time-range datasets
-- Gas statistics rollups
-- Heatmap datasets
-- Gas prediction estimates
-- Featured action cost datasets
-- ETH reference price
-- Alerts CRUD
-- Health checks
-- Optional maintenance/purge operations
+---
 
-## Who This Overview Is For
+## Who should read this repo?
 
-### Recruiters
+- **Recruiters / employers** — scope and product maturity at a glance  
+- **Collaborators** — where the product fits before asking for repo access  
+- **Users** — what the live site offers without reading source code  
 
-Use this repo to quickly evaluate real-world product scope:
+---
 
-- realtime full-stack architecture delivery
-- data-heavy UI/UX implementation quality
-- system reliability thinking beyond surface UI
-- practical blockchain tooling focus (not toy demos)
+## Disclosure
 
-### System Engineers / Platform Teams
-
-Use this repo to assess architecture intent:
-
-- websocket + REST hybrid delivery model
-- local persistence + cached analytics patterns
-- update scheduling to avoid wasteful polling
-- observability and maintenance endpoints
-
-### Potential Collaborators
-
-Use this repo to understand integration and extension opportunities:
-
-- where new route models can be added
-- where new analytics modules can be attached
-- where recommendation logic can be expanded
-
-### Potential Employers
-
-Use this repo as a concise capability map for:
-
-- production-minded realtime dashboards
-- blockchain data product execution
-- decision-support interfaces under changing network conditions
-
-## Security & Disclosure Policy
-
-- No private source internals are published here.
-- No RPC secrets, API keys, or credentials are included.
-- This repository is intentionally documentation-first.
-
-## Related App (Private Implementation)
-
-- Private app repo: `logicencoder/eth_gas_tracker`
-- This overview is the public-facing capability + architecture summary.
+Intentionally **no private code**. Describes **what** the product does and **why**, not step-by-step implementation.
